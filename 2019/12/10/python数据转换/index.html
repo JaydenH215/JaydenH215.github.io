@@ -1,0 +1,1616 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
+
+<link rel="stylesheet" href="/css/main.css?v=7.1.1">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.1.1">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.1.1">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=7.1.1" color="#222">
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.1.1',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":true},
+    back2top: true,
+    back2top_sidebar: false,
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="整理一下写python小工具的数据转换常用方法。">
+<meta name="keywords" content="python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python数据转换">
+<meta property="og:url" content="https://jaydenh215.github.io/2019/12/10/python数据转换/index.html">
+<meta property="og:site_name" content="Jayden&#39;s Blog">
+<meta property="og:description" content="整理一下写python小工具的数据转换常用方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-05-31T02:36:58.233Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="python数据转换">
+<meta name="twitter:description" content="整理一下写python小工具的数据转换常用方法。">
+
+
+
+
+
+  
+  
+  <link rel="canonical" href="https://jaydenh215.github.io/2019/12/10/python数据转换/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>python数据转换 | Jayden's Blog</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Jayden's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://jaydenh215.github.io/2019/12/10/python数据转换/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jayden Huang">
+      <meta itemprop="description" content="Stay hungry, Stay foolish.">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Jayden's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">python数据转换
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-12-10 13:09:01" itemprop="dateCreated datePublished" datetime="2019-12-10T13:09:01+08:00">2019-12-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2020-05-31 10:36:58" itemprop="dateModified" datetime="2020-05-31T10:36:58+08:00">2020-05-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/术业专攻/" itemprop="url" rel="index"><span itemprop="name">术业专攻</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+              
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+            
+                <span class="post-meta-item-text">评论数：</span>
+                <a href="/2019/12/10/python数据转换/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/10/python数据转换/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+            <span id="/2019/12/10/python数据转换/" class="leancloud_visitors" data-flag-title="python数据转换">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>整理一下写python小工具的数据转换常用方法。<br><a id="more"></a> </p>
+<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>优先使用py标准库的方法</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><!-- TOC -->
+<ul>
+<li><a href="#1-built-in-types">1. Built-in Types</a><ul>
+<li><a href="#11-int">1.1. int</a><ul>
+<li><a href="#111-intto_byteslength-byteorder--signedfalse">1.1.1. int.to_bytes(length, byteorder, *, signed=False)</a></li>
+<li><a href="#112-intfrom_bytesbytes-byteorder--signedfalse">1.1.2. int.from_bytes(bytes, byteorder, *, signed=False)</a></li>
+</ul>
+</li>
+<li><a href="#12-str">1.2. str</a><ul>
+<li><a href="#121-strencodeencodingutf-8-errorsstrict">1.2.1. str.encode(encoding=”utf-8”, errors=”strict”)</a></li>
+<li><a href="#122-strisascii">1.2.2. str.isascii()</a></li>
+<li><a href="#123-strisdecimal">1.2.3. str.isdecimal()</a></li>
+</ul>
+</li>
+<li><a href="#13-bytes">1.3. bytes</a><ul>
+<li><a href="#131-bytesfromhexstring">1.3.1. bytes.fromhex(string)</a></li>
+<li><a href="#132-hex">1.3.2. hex()</a></li>
+<li><a href="#133-bytesdecodeencodingutf-8-errorsstrict">1.3.3. bytes.decode(encoding=”utf-8”, errors=”strict”)</a></li>
+<li><a href="#134-bytesisascii">1.3.4. bytes.isascii()</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#2-other-std-libs">2. Other Std Libs</a><ul>
+<li><a href="#21-struct">2.1. struct</a><ul>
+<li><a href="#211-format">2.1.1. format</a></li>
+<li><a href="#212-structpackformat-v1-v2-">2.1.2. struct.pack(format, v1, v2, …)</a></li>
+<li><a href="#213-structpack_intoformat-buffer-offset-v1-v2-">2.1.3. struct.pack_into(format, buffer, offset, v1, v2, …)</a></li>
+<li><a href="#214-structunpackformat-buffer">2.1.4. struct.unpack(format, buffer)</a></li>
+<li><a href="#215-structunpack_fromformat-buffer-offset0">2.1.5. struct.unpack_from(format, buffer, offset=0)</a></li>
+</ul>
+</li>
+<li><a href="#22-binascii">2.2. binascii</a><ul>
+<li>[2.2.1. binascii.hexlify(data<a href="#221-binasciihexlifydata-sep-bytes_per_sep1">, sep[, bytes_per_sep=1]])</a></li>
+<li><a href="#222-binasciiunhexlifyhexstr">2.2.2. binascii.unhexlify(hexstr)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3-参考资料">3. 参考资料</a></li>
+</ul>
+<!-- /TOC -->
+<h1 id="1-Built-in-Types"><a href="#1-Built-in-Types" class="headerlink" title="1. Built-in Types"></a>1. Built-in Types</h1><h2 id="1-1-int"><a href="#1-1-int" class="headerlink" title="1.1. int"></a>1.1. int</h2><h3 id="1-1-1-int-to-bytes-length-byteorder-signed-False"><a href="#1-1-1-int-to-bytes-length-byteorder-signed-False" class="headerlink" title="1.1.1. int.to_bytes(length, byteorder, *, signed=False)"></a>1.1.1. int.to_bytes(length, byteorder, *, signed=False)</h3><p>Return an array of bytes representing an integer.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="number">1024</span>).to_bytes(<span class="number">2</span>, byteorder=<span class="string">'big'</span>)</span><br><span class="line"><span class="string">b'\x04\x00'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="number">1024</span>).to_bytes(<span class="number">10</span>, byteorder=<span class="string">'big'</span>)</span><br><span class="line"><span class="string">b'\x00\x00\x00\x00\x00\x00\x00\x00\x04\x00'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>(<span class="number">-1024</span>).to_bytes(<span class="number">10</span>, byteorder=<span class="string">'big'</span>, signed=<span class="literal">True</span>)</span><br><span class="line"><span class="string">b'\xff\xff\xff\xff\xff\xff\xff\xff\xfc\x00'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x = <span class="number">1000</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>x.to_bytes((x.bit_length() + <span class="number">7</span>) // <span class="number">8</span>, byteorder=<span class="string">'little'</span>)</span><br><span class="line"><span class="string">b'\xe8\x03'</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-1-2-int-from-bytes-bytes-byteorder-signed-False"><a href="#1-1-2-int-from-bytes-bytes-byteorder-signed-False" class="headerlink" title="1.1.2. int.from_bytes(bytes, byteorder, *, signed=False)"></a>1.1.2. int.from_bytes(bytes, byteorder, *, signed=False)</h3><p>Return the integer represented by the given array of bytes.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>int.from_bytes(<span class="string">b'\x00\x10'</span>, byteorder=<span class="string">'big'</span>)</span><br><span class="line"><span class="number">16</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>int.from_bytes(<span class="string">b'\x00\x10'</span>, byteorder=<span class="string">'little'</span>)</span><br><span class="line"><span class="number">4096</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>int.from_bytes(<span class="string">b'\xfc\x00'</span>, byteorder=<span class="string">'big'</span>, signed=<span class="literal">True</span>)</span><br><span class="line"><span class="number">-1024</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>int.from_bytes(<span class="string">b'\xfc\x00'</span>, byteorder=<span class="string">'big'</span>, signed=<span class="literal">False</span>)</span><br><span class="line"><span class="number">64512</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>int.from_bytes([<span class="number">255</span>, <span class="number">0</span>, <span class="number">0</span>], byteorder=<span class="string">'big'</span>)</span><br><span class="line"><span class="number">16711680</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-2-str"><a href="#1-2-str" class="headerlink" title="1.2. str"></a>1.2. str</h2><h3 id="1-2-1-str-encode-encoding-”utf-8”-errors-”strict”"><a href="#1-2-1-str-encode-encoding-”utf-8”-errors-”strict”" class="headerlink" title="1.2.1. str.encode(encoding=”utf-8”, errors=”strict”)"></a>1.2.1. str.encode(encoding=”utf-8”, errors=”strict”)</h3><p>Return an encoded version of the string as a bytes object.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">'w435g'</span>.encode()</span><br><span class="line"><span class="string">b'w435g'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>type(<span class="string">'w435g'</span>.encode())</span><br><span class="line">&lt;<span class="class"><span class="keyword">class</span> '<span class="title">bytes</span>'&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-2-2-str-isascii"><a href="#1-2-2-str-isascii" class="headerlink" title="1.2.2. str.isascii()"></a>1.2.2. str.isascii()</h3><p>Return True if the string is empty or all characters in the string are ASCII, False otherwise. ASCII characters have code points in the range U+0000-U+007F.</p>
+<h3 id="1-2-3-str-isdecimal"><a href="#1-2-3-str-isdecimal" class="headerlink" title="1.2.3. str.isdecimal()"></a>1.2.3. str.isdecimal()</h3><p>Return True if all characters in the string are decimal characters and there is at least one character, False otherwise. Decimal characters are those that can be used to form numbers in base 10, e.g. U+0660, ARABIC-INDIC DIGIT ZERO. Formally a decimal character is a character in the Unicode General Category “Nd”.</p>
+<h2 id="1-3-bytes"><a href="#1-3-bytes" class="headerlink" title="1.3. bytes"></a>1.3. bytes</h2><h3 id="1-3-1-bytes-fromhex-string"><a href="#1-3-1-bytes-fromhex-string" class="headerlink" title="1.3.1. bytes.fromhex(string)"></a>1.3.1. bytes.fromhex(string)</h3><p>This bytes class method returns a bytes object, decoding the given string object. The string must contain two hexadecimal digits per byte, with ASCII whitespace being ignored.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>bytes.fromhex(<span class="string">'2Ef0 F1f2  '</span>)</span><br><span class="line"><span class="string">b'.\xf0\xf1\xf2'</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-3-2-hex"><a href="#1-3-2-hex" class="headerlink" title="1.3.2. hex()"></a>1.3.2. hex()</h3><p>Return a string object containing two hexadecimal digits for each byte in the instance.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">b'\xf0\xf1\xf2'</span>.hex()</span><br><span class="line"><span class="string">'f0f1f2'</span></span><br></pre></td></tr></table></figure>
+<p>If you want to make the hex string easier to read, you can specify a single character separator sep parameter to include in the output. By default between each byte. A second optional bytes_per_sep parameter controls the spacing. Positive values calculate the separator position from the right, negative values from the left.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>value = <span class="string">b'\xf0\xf1\xf2'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>value.hex(<span class="string">'-'</span>)</span><br><span class="line"><span class="string">'f0-f1-f2'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>value.hex(<span class="string">'_'</span>, <span class="number">2</span>)</span><br><span class="line"><span class="string">'f0_f1f2'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="string">b'UUDDLRLRAB'</span>.hex(<span class="string">' '</span>, <span class="number">-4</span>)</span><br><span class="line"><span class="string">'55554444 4c524c52 4142'</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-3-3-bytes-decode-encoding-”utf-8”-errors-”strict”"><a href="#1-3-3-bytes-decode-encoding-”utf-8”-errors-”strict”" class="headerlink" title="1.3.3. bytes.decode(encoding=”utf-8”, errors=”strict”)"></a>1.3.3. bytes.decode(encoding=”utf-8”, errors=”strict”)</h3><p>Return a string decoded from the given bytes.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>value = <span class="string">b'\xf0\xf1\xf2'</span></span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>value.decode()</span><br><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"&lt;stdin&gt;"</span>, line <span class="number">1</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">UnicodeDecodeError: <span class="string">'utf-8'</span> codec can<span class="string">'t decode byte 0xf0 in position 0: invalid continuation byte</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&gt;&gt;&gt; value = b'</span>\x30\x31\x32<span class="string">'</span></span><br><span class="line"><span class="string">&gt;&gt;&gt; value.decode()</span></span><br><span class="line"><span class="string">'</span><span class="number">012</span><span class="string">'</span></span><br></pre></td></tr></table></figure>
+<h3 id="1-3-4-bytes-isascii"><a href="#1-3-4-bytes-isascii" class="headerlink" title="1.3.4. bytes.isascii()"></a>1.3.4. bytes.isascii()</h3><p>Return True if the sequence is empty or all bytes in the sequence are ASCII, False otherwise. ASCII bytes are in the range 0-0x7F.</p>
+<h1 id="2-Other-Std-Libs"><a href="#2-Other-Std-Libs" class="headerlink" title="2. Other Std Libs"></a>2. Other Std Libs</h1><h2 id="2-1-struct"><a href="#2-1-struct" class="headerlink" title="2.1. struct"></a>2.1. struct</h2><p><a href="https://docs.python.org/3/library/struct.html" target="_blank" rel="noopener">标准库介绍链接</a></p>
+<p>This module performs conversions between Python values and C structs represented as Python bytes objects. This can be used in handling binary data stored in files or from network connections, among other sources. </p>
+<h3 id="2-1-1-format"><a href="#2-1-1-format" class="headerlink" title="2.1.1. format"></a>2.1.1. format</h3><table>
+<thead>
+<tr>
+<th style="text-align:left"><strong>Format</strong></th>
+<th style="text-align:center"><strong>C Type</strong></th>
+<th style="text-align:center"><strong>Python Type</strong></th>
+<th style="text-align:center"><strong>Standard size</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">x</td>
+<td style="text-align:center">pad byte</td>
+<td style="text-align:center">no value</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:left">c</td>
+<td style="text-align:center">char</td>
+<td style="text-align:center">bytes of length 1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:left">b</td>
+<td style="text-align:center">signed char</td>
+<td style="text-align:center">integer</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:left">B</td>
+<td style="text-align:center">unsigned char</td>
+<td style="text-align:center">integer</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:left">h</td>
+<td style="text-align:center">short</td>
+<td style="text-align:center">integer</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:left">H</td>
+<td style="text-align:center">unsigned short</td>
+<td style="text-align:center">integer</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:left">i</td>
+<td style="text-align:center">int</td>
+<td style="text-align:center">integer</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:left">I</td>
+<td style="text-align:center">unsigned int</td>
+<td style="text-align:center">integer</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:left">s</td>
+<td style="text-align:center">char []</td>
+<td style="text-align:center">bytes</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-1-2-struct-pack-format-v1-v2-…"><a href="#2-1-2-struct-pack-format-v1-v2-…" class="headerlink" title="2.1.2. struct.pack(format, v1, v2, …)"></a>2.1.2. struct.pack(format, v1, v2, …)</h3><p>Return a bytes object containing the values v1, v2, … packed according to the format string format. The arguments must match the values required by the format exactly.</p>
+<h3 id="2-1-3-struct-pack-into-format-buffer-offset-v1-v2-…"><a href="#2-1-3-struct-pack-into-format-buffer-offset-v1-v2-…" class="headerlink" title="2.1.3. struct.pack_into(format, buffer, offset, v1, v2, …)"></a>2.1.3. struct.pack_into(format, buffer, offset, v1, v2, …)</h3><p>Pack the values v1, v2, … according to the format string format and write the packed bytes into the writable buffer buffer starting at position offset. Note that offset is a required argument.</p>
+<h3 id="2-1-4-struct-unpack-format-buffer"><a href="#2-1-4-struct-unpack-format-buffer" class="headerlink" title="2.1.4. struct.unpack(format, buffer)"></a>2.1.4. struct.unpack(format, buffer)</h3><p>Unpack from the buffer buffer (presumably packed by pack(format, …)) according to the format string format. The result is a tuple even if it contains exactly one item. The buffer’s size in bytes must match the size required by the format, as reflected by calcsize().</p>
+<h3 id="2-1-5-struct-unpack-from-format-buffer-offset-0"><a href="#2-1-5-struct-unpack-from-format-buffer-offset-0" class="headerlink" title="2.1.5. struct.unpack_from(format, buffer, offset=0)"></a>2.1.5. struct.unpack_from(format, buffer, offset=0)</h3><p>Unpack from buffer starting at position offset, according to the format string format. The result is a tuple even if it contains exactly one item. The buffer’s size in bytes, starting at position offset, must be at least the size required by the format, as reflected by calcsize().</p>
+<h2 id="2-2-binascii"><a href="#2-2-binascii" class="headerlink" title="2.2. binascii"></a>2.2. binascii</h2><h3 id="2-2-1-binascii-hexlify-data-sep-bytes-per-sep-1"><a href="#2-2-1-binascii-hexlify-data-sep-bytes-per-sep-1" class="headerlink" title="2.2.1. binascii.hexlify(data[, sep[, bytes_per_sep=1]])"></a>2.2.1. binascii.hexlify(data[, sep[, bytes_per_sep=1]])</h3><p>Return the hexadecimal representation of the binary data. Every byte of data is converted into the corresponding 2-digit hex representation. The returned bytes object is therefore twice as long as the length of data.</p>
+<p>Similar functionality (but returning a text string) is also conveniently accessible using the bytes.hex() method.</p>
+<p>If sep is specified, it must be a single character str or bytes object. It will be inserted in the output after every bytes_per_sep input bytes. Separator placement is counted from the right end of the output by default, if you wish to count from the left, supply a negative bytes_per_sep value.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> binascii</span><br><span class="line"><span class="meta">&gt;&gt;&gt; </span>binascii.hexlify(<span class="string">b'\xb9\x01\xef'</span>, <span class="string">'-'</span>)</span><br><span class="line"><span class="string">b'b9-01-ef'</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-2-2-binascii-unhexlify-hexstr"><a href="#2-2-2-binascii-unhexlify-hexstr" class="headerlink" title="2.2.2. binascii.unhexlify(hexstr)"></a>2.2.2. binascii.unhexlify(hexstr)</h3><p>Return the binary data represented by the hexadecimal string hexstr. This function is the inverse of hexlify(). hexstr must contain an even number of hexadecimal digits (which can be upper or lower case), otherwise an Error exception is raised.</p>
+<p>Similar functionality (accepting only text string arguments, but more liberal towards whitespace) is also accessible using the bytes.fromhex() class method.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&gt;&gt;&gt; </span>binascii.unhexlify(<span class="string">b'3094'</span>)</span><br><span class="line"><span class="string">b'0\x94'</span></span><br></pre></td></tr></table></figure>
+<h1 id="3-参考资料"><a href="#3-参考资料" class="headerlink" title="3. 参考资料"></a>3. 参考资料</h1><ul>
+<li><a href="https://www.cnblogs.com/abclife/p/7445222.html" target="_blank" rel="noopener">Python 3中bytes/string的区别</a></li>
+<li><a href="https://docs.python.org/3/index.html" target="_blank" rel="noopener">Python 3官方文档</a></li>
+<li><a href="https://www.cnblogs.com/DirWang/p/11426517.html" target="_blank" rel="noopener">python3 byte,int,str转换</a></li>
+<li><a href="https://www.cnblogs.com/LoveMusicGuy/p/10616430.html" target="_blank" rel="noopener">python 字符串，bytes和hex字符串之间的相互转换</a></li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+      <div>
+        <div id="reward-container">
+  <div>“如果觉得还不错，请我喝杯咖啡吧~”</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+
+    
+      
+      
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="Jayden Huang 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        
+
+
+
+
+  
+
+
+
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>Jayden Huang</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    
+    <a href="https://jaydenh215.github.io/2019/12/10/python数据转换/" title="python数据转换">https://jaydenh215.github.io/2019/12/10/python数据转换/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/python/" rel="tag"># python</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div class="social_share">
+            
+            
+            
+              <div>
+                
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>   
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    <a href="#" class="bds_more" data-cmd="more"></a>
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "16",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+
+
+              </div>
+            
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/02/rtt-nimble揭秘系列——controller（7）/" rel="next" title="rtt+nimble揭秘系列——controller（7）">
+                <i class="fa fa-chevron-left"></i> rtt+nimble揭秘系列——controller（7）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/12/17/浅谈BLE中的cortexm编译链接/" rel="prev" title="浅谈BLE中的cortexm编译链接">
+                浅谈BLE中的cortexm编译链接 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="Jayden Huang">
+            
+              <p class="site-author-name" itemprop="name">Jayden Huang</p>
+              <div class="site-description motion-element" itemprop="description">Stay hungry, Stay foolish.</div>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  
+                    
+                      <a href="/categories/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  
+                    
+                      <a href="/tags/">
+                    
+                  
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">30</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/jaydenh215" title="GitHub &rarr; https://github.com/jaydenh215" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#目录"><span class="nav-text">目录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Built-in-Types"><span class="nav-text">1. Built-in Types</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-int"><span class="nav-text">1.1. int</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-int-to-bytes-length-byteorder-signed-False"><span class="nav-text">1.1.1. int.to_bytes(length, byteorder, *, signed=False)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-int-from-bytes-bytes-byteorder-signed-False"><span class="nav-text">1.1.2. int.from_bytes(bytes, byteorder, *, signed=False)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-str"><span class="nav-text">1.2. str</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-1-str-encode-encoding-”utf-8”-errors-”strict”"><span class="nav-text">1.2.1. str.encode(encoding=”utf-8”, errors=”strict”)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-2-str-isascii"><span class="nav-text">1.2.2. str.isascii()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-str-isdecimal"><span class="nav-text">1.2.3. str.isdecimal()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-bytes"><span class="nav-text">1.3. bytes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-1-bytes-fromhex-string"><span class="nav-text">1.3.1. bytes.fromhex(string)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-2-hex"><span class="nav-text">1.3.2. hex()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-3-bytes-decode-encoding-”utf-8”-errors-”strict”"><span class="nav-text">1.3.3. bytes.decode(encoding=”utf-8”, errors=”strict”)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-4-bytes-isascii"><span class="nav-text">1.3.4. bytes.isascii()</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Other-Std-Libs"><span class="nav-text">2. Other Std Libs</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-struct"><span class="nav-text">2.1. struct</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-format"><span class="nav-text">2.1.1. format</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-struct-pack-format-v1-v2-…"><span class="nav-text">2.1.2. struct.pack(format, v1, v2, …)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-struct-pack-into-format-buffer-offset-v1-v2-…"><span class="nav-text">2.1.3. struct.pack_into(format, buffer, offset, v1, v2, …)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-4-struct-unpack-format-buffer"><span class="nav-text">2.1.4. struct.unpack(format, buffer)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-5-struct-unpack-from-format-buffer-offset-0"><span class="nav-text">2.1.5. struct.unpack_from(format, buffer, offset=0)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-binascii"><span class="nav-text">2.2. binascii</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-1-binascii-hexlify-data-sep-bytes-per-sep-1"><span class="nav-text">2.2.1. binascii.hexlify(data[, sep[, bytes_per_sep=1]])</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-2-binascii-unhexlify-hexstr"><span class="nav-text">2.2.2. binascii.unhexlify(hexstr)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-参考资料"><span class="nav-text">3. 参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+  
+    <div id="sidebar-dimmer"></div>
+  
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jayden Huang</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+
+  
+
+
+  <script src="/js/utils.js?v=7.1.1"></script>
+
+  <script src="/js/motion.js?v=7.1.1"></script>
+
+
+
+  
+  
+
+
+  <script src="/js/schemes/muse.js?v=7.1.1"></script>
+
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.1.1"></script>
+<script src="/js/post-details.js?v=7.1.1"></script>
+
+
+
+  
+
+
+  <script src="/js/next-boot.js?v=7.1.1"></script>
+
+
+  
+
+  
+
+  
+
+  
+  
+
+<script src="//cdn1.lncld.net/static/js/3.11.1/av-min.js"></script>
+
+
+
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+
+<script>
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail';
+  guest = guest.split(',').filter(function(item) {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'C7jVqVxinDQnJVIfqKJSmXKb-gzGzoHsz',
+    appKey: 'ELsjbrq1xEPuSkAMz3v4vhge',
+    placeholder: 'Comment here ...',
+    avatar: 'mm',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn'
+  });
+  //新增
+  var infoEle= document.querySelector('#comments .info');
+  if (infoEle && infoEle.childNodes && infoEle.childNodes.length > 0) {
+    infoEle.childNodes.forEach(function(item) {
+      item.parentNode.removeChild(item);
+    });
+  }
+</script>
+
+
+
+
+  
+
+
+  
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url).replace(/\/{2,}/g, '/');
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('-1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x"></i></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x"></i></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+  
+  <script>
+    
+    function addCount(Counter) {
+      var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
+        .done(function({ results }) {
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
+          }
+        })
+        .fail(function ({ responseJSON }) {
+          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+        });
+    }
+    
+
+    $(function() {
+      $.get('https://app-router.leancloud.cn/2/route?appId=' + 'C7jVqVxinDQnJVIfqKJSmXKb-gzGzoHsz')
+        .done(function({ api_server }) {
+          var Counter = function(method, url, data) {
+            return $.ajax({
+              method: method,
+              url: 'https://' + api_server + '/1.1' + url,
+              headers: {
+                'X-LC-Id': 'C7jVqVxinDQnJVIfqKJSmXKb-gzGzoHsz',
+                'X-LC-Key': 'ELsjbrq1xEPuSkAMz3v4vhge',
+                'Content-Type': 'application/json',
+              },
+              data: data
+            });
+          };
+          
+            addCount(Counter);
+          
+        });
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
